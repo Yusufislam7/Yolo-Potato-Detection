@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Settings - Potato Detection</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <style>
+      .settings-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #1e1e1e;
+        border-radius: 10px;
+        color: white;
+      }
+      .camera-list {
+        margin: 20px 0;
+      }
+      .camera-item {
+        background: #2d2d2d;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+      }
+      .camera-item:hover {
+        border-color: #4CAF50;
+        background: #3a3a3a;
+      }
+      .camera-item.selected {
+        border-color: #4CAF50;
+        background: #4CAF50;
+        color: white;
+      }
+      .back-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #008CBA;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .back-btn:hover {
+        background: #007399;
+      }
+      .status {
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 5px;
+        background: #2d2d2d;
+      }
+      .status.active {
+        background: #4CAF50;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="settings-container">
+      <h1>📷 Camera Settings</h1>
+      
+      <div id="status" class="status">
+        Loading camera information...
+      </div>
+
+      <h3>Available Cameras:</h3>
+      <div id="camera-list" class="camera-list">
+        <p>Scanning for cameras...</p>
+      </div>
+
+      <a href="/" class="back-btn">← Back to Home</a>
+    </div>
+
+    <script>
+      async function loadCameras() {
+        try {
+          // Get available cameras
+          const response = await fetch('/api/cameras');
+          const cameras = await response.json();
+
+          // Get current camera status
+          const statusResponse = await fetch('/api/camera_status');
+          const status = await statusResponse.json();
+
+          // Update status
+          const statusDiv = document.getElementById('status');
+          if (status.running) {
+            statusDiv.className = 'status active';
+            statusDiv.innerHTML = `✅ Camera is <strong>RUNNING</strong><br>Index: ${status.config.index}, Backend: ${status.config.backend}`;
+          } else {
+            statusDiv.className = 'status';
+            statusDiv.innerHTML = `⚫ Camera is <strong>STOPPED</strong><br>Configured: Index ${status.config.index}, Backend ${status.config.backend}`;
+          }
+
+          // Display cameras
+          const cameraList = document.getElementById('camera-list');
+          if (cameras.length === 0) {
+            cameraList.innerHTML = '<p style="color: red;">❌ No cameras found!</p>';
+            return;
+          }
+
+          cameraList.innerHTML = '';
+          cameras.forEach(camera => {
+            const div = document.createElement('div');
+            div.className = 'camera-item';
+            if (camera.index === status.config.index && camera.backend === status.config.backend) {
+              div.classList.add('selected');
+            }
+            
+            div.innerHTML = `
+              <strong>Camera ${camera.index}</strong> (${camera.backend})<br>
+              Resolution: ${camera.resolution}<br>
+              FPS: ${camera.fps}
+            `;
+            
+            div.onclick = async () => {
+              const res = await fetch(`/api/set_camera/${camera.index}/${camera.backend}`);
+              const result = await res.json();
+              if (result.status === 'ok') {
+                loadCameras();
+              }
+            };
+            
+            cameraList.appendChild(div);
+          });
+        } catch (error) {
+          console.error('Error:', error);
+          document.getElementById('camera-list').innerHTML = '<p style="color: red;">Error loading cameras</p>';
+        }
+      }
+
+      // Load cameras on page load
+      loadCameras();
+      
+      // Refresh every 2 seconds
+      setInterval(loadCameras, 2000);
+    </script>
+  </body>
+</html>

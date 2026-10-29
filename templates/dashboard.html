@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Detection Dashboard</h1>
+
+<div class="card">
+    <p>Damaged Potato: {{ count['Damaged'] }}</p>
+    <p>Defected Potato: {{ count['Defected'] }}</p>
+    <p>Fungal Potato: {{ count['Fungal'] }}</p>
+    <p>Normal Potato: {{ count['Potato'] }}</p>
+    <p>Spoiled Potato: {{ count['Spoiled'] }}</p>
+</div>
+
+<a href="/" class="btn dash">Back</a>
+
+</body>
+</html>

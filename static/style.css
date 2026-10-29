@@ -1,0 +1,118 @@
+body {
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  animation: fadeInBody 0.7s ease forwards;
+}
+
+@keyframes fadeInBody {
+  to {
+    opacity: 1;
+  }
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+.buttons {
+  margin: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 5px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.13);
+  transition: background 0.25s, box-shadow 0.25s, transform 0.18s;
+  cursor: pointer;
+}
+.btn:hover,
+.btn:focus {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.18);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.start {
+  background: #2ecc71;
+}
+.stop {
+  background: #e74c3c;
+}
+.image {
+  background: #9b59b6;
+}
+.video {
+  background: #f39c12;
+}
+.settings {
+  background: #34495e;
+}
+.history {
+  background: #16a085;
+}
+.refresh {
+  background: #e67e22;
+}
+
+.video-box {
+  margin: auto;
+  width: 650px;
+  margin-top: 20px;
+  background-color: #111;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.1);
+  transition: box-shadow 0.3s;
+}
+.video-box:hover {
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.18);
+}
+
+.video-box img {
+  width: 100%;
+}
+
+.preview {
+  width: 50%;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.card {
+  background: #333;
+  padding: 20px;
+  width: 300px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.1);
+  transition: box-shadow 0.3s, background 0.3s;
+}
+.card:hover {
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.18);
+  background: #222;
+}
+
+input[type="file"] {
+  border: 2px dashed #6366f1;
+  border-radius: 8px;
+  padding: 12px;
+  background: #232323;
+  color: #fff;
+  margin-bottom: 16px;
+  transition: border 0.3s, background 0.3s;
+}
+input[type="file"]:hover,
+input[type="file"]:focus {
+  border: 2px solid #818cf8;
+  background: #181818;
+}

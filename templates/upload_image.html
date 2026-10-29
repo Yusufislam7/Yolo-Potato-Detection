@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Upload Image - YOLOv8</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <div class="card" style="margin-top: 32px">
+      <h1 style="margin-bottom: 18px">Upload Image for Detection</h1>
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        "
+      >
+        <input type="file" name="image" required />
+        <button class="btn start" style="width: 100%; font-size: 1.1em">
+          Upload
+        </button>
+      </form>
+      {% if uploaded %}
+      <h3 style="margin-top: 24px">Result:</h3>
+      <img
+        src="/static/{{ image_path }}"
+        class="preview"
+        style="box-shadow: 0 4px 24px #6366f133"
+      />
+      {% endif %}
+      <a href="/" class="btn dash" style="margin-top: 18px; width: 100%"
+        >Back</a
+      >
+    </div>
+  </body>
+</html>

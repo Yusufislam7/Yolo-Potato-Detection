@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Upload Video - YOLOv8</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <h1>Upload Video for Detection</h1>
+
+    {% if error %}
+    <p style="color: red">Error: {{ error }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="video" accept="video/*" required />
+      <button class="btn start">Upload</button>
+    </form>
+
+    {% if uploaded %}
+    <p style="color: green">
+      ✅ Video "{{ original_name }}" uploaded successfully!
+    </p>
+    <p style="font-size: 14px; color: #666">
+      ⏳ Processing video, please wait...
+    </p>
+    <a class="btn image" href="/process_video/{{ video_name }}"
+      >🎬 Process Video Now</a
+    >
+    {% endif %}
+
+    <br /><a href="/" class="btn dash">Back</a>
+  </body>
+</html>

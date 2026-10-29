@@ -1,0 +1,6 @@
+{
+  "camera": {
+    "index": 1,
+    "backend": "CAP_DSHOW"
+  }
+}

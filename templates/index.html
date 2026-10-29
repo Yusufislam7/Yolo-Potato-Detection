@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Potato Detection - YOLOv8</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <h1>Potato Detection - YOLOv8</h1>
+
+    <div class="buttons">
+      <a href="/start_camera" class="btn start">Start Webcam</a>
+      <a href="/stop_camera" class="btn stop">Stop Webcam</a>
+      <a href="/upload_image" class="btn image">Upload Image</a>
+      <a href="/upload_video" class="btn video">Upload Video</a>
+      <a href="/camera_settings" class="btn settings">⚙️ Camera Settings</a>
+      <a href="/history" class="btn history">📊 Detection History</a>
+      <button onclick="resetCounter()" class="btn refresh">🔄 Reset Counter</button>
+    </div>
+
+    <div class="video-box">
+      <img src="/video_feed" />
+    </div>
+
+    <script>
+      async function resetCounter() {
+        if (confirm('⚠️ Apakah Anda yakin ingin reset counter?\n\nSemua history akan dihapus dan counting dimulai dari 0 lagi.')) {
+          try {
+            const response = await fetch('/api/history/clear');
+            const result = await response.json();
+            
+            if (result.status === 'ok') {
+              alert('✅ Counter berhasil direset!\n\nHitung mulai dari awal lagi.');
+            }
+          } catch (error) {
+            alert('❌ Gagal reset counter: ' + error);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
